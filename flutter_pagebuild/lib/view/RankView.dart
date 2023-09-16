@@ -45,7 +45,7 @@ class RankView extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: Colors.amberAccent,
-                    spreadRadius: 5,
+                    spreadRadius: 2,
                     blurRadius: 7,
                     offset: Offset(0, 2),
                   ),
@@ -262,8 +262,8 @@ class RankGraph1State extends State<RankGraph1> {
           dataSource: data,
           xValueMapper: (_ChartData data, _) => data.x,
           yValueMapper: (_ChartData data, _) => data.y,
+          pointColorMapper: (_ChartData data, _) => data.color,
           name: 'Period',
-          // color: data[].color,
           width: 0.4,
         ),
       ],
@@ -281,7 +281,6 @@ class _ChartData {
 
 //Rabbit 모은 금액 Graph
 class RankGraph2 extends StatefulWidget {
-  // ignore: prefer_const_constructors_in_immutables
   RankGraph2({Key? key}) : super(key: key);
 
   @override
@@ -318,8 +317,8 @@ class RankGraph2State extends State<RankGraph2> {
           dataSource: data,
           xValueMapper: (_ChartData data, _) => data.x,
           yValueMapper: (_ChartData data, _) => data.y,
+          pointColorMapper: (_ChartData data, _) => data.color,
           name: 'Gold',
-          color: Color.fromRGBO(159, 205, 243, 1),
           width: 0.4,
         ),
       ],

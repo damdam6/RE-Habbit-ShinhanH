@@ -21,6 +21,6 @@ class DetailController extends GetxController {
   }
 
   void showDetail() {
-    Get.to(DetailView());
+    // Get.to(DetailView());
   }
 }
