@@ -100,19 +100,25 @@ getList(action) async {
   return list;
 }
 
-timestampToDateTime(int timestamp) {
-  List list = [];
-  list.add("09${(timestamp ~/ 24 + 1).toString().padLeft(2, '0')}");
-  list.add("${(timestamp % 24).toString().padLeft(2, '0')}00");
-  return list;
-}
+// timestampToDateTime(int timestamp) {
+//   List list = [];
+//   list.add("09${(timestamp ~/ 24 + 1).toString().padLeft(2, '0')}");
+//   list.add("${(timestamp % 24).toString().padLeft(2, '0')}00");
+//   return list;
+// }
 
-timeToString(int time) {
-  return time.toString().padLeft(2, '0') + "00";
-}
+// timeToString(int time) {
+//   return time.toString().padLeft(2, '0') + "00";
+// }
 
-timestamp(date, time) {
-  return int.parse(date.substring(2)) * 24 + int.parse(time.substring(0, 2));
+timestamp(String date, String time) {
+  int year = 2023;
+  int month = int.parse(date.substring(0, 2));
+  int day = int.parse(date.substring(2));
+  int hour = int.parse(time.substring(0, 2));
+  int minute = int.parse(time.substring(2));
+  DateTime dateTime = DateTime(year, month, day, hour, minute);
+  return dateTime.millisecondsSinceEpoch;
 }
 
 void main() async {

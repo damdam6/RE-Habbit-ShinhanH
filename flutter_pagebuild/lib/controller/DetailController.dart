@@ -17,10 +17,14 @@ class DetailController extends GetxController {
   //}
 
   void goToMain() {
-    Get.to(const MainView());
+    Get.to(MainView());
   }
 
   void showDetail() {
+<<<<<<< HEAD
     // Get.to(DetailView());
+=======
+    //Get.to(DetailView());
+>>>>>>> e7d2776f018e3b15cb448b5d690cfe6fa615e84b
   }
 }

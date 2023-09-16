@@ -77,6 +77,7 @@ class HeaderWidget extends StatelessWidget {
 }
 
 // 첫번째 페이지
+
 class StartPage extends StatelessWidget {
   const StartPage({super.key});
 
@@ -132,9 +133,6 @@ class StartPage extends StatelessWidget {
           ),
 
           TextButton(
-            onPressed: () {
-              RegisController().goToMainTest();
-            },
             style: TextButton.styleFrom(
               foregroundColor: Colors.black,
               textStyle: const TextStyle(
@@ -144,32 +142,113 @@ class StartPage extends StatelessWidget {
               ),
             ),
             child: const Text('로그인하기'),
+
+            onPressed: () {
+              // RegisController().goToMainTest();
+              // 성공 팝업
+              showDialog(
+                context: context,
+                
+                barrierDismissible: true,
+                builder: (BuildContext context) {
+                  double screenWidth = MediaQuery.of(context).size.width;
+                  double screenHeight = MediaQuery.of(context).size.height;
+
+                  return AlertDialog(
+                    
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    //Dialog Main Title
+                    title: const Column(
+                      
+                      children: <Widget>[
+                        Text("로그인"),
+                      ],
+                    ),
+                    //
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '이름을 입력해주세요.\n',
+                          style: TextStyle(
+                            fontSize: 22,
+                          ),),
+                        
+                        // 여기에 로그인 기능 구현
+                        SizedBox(
+                          width: screenWidth * 0.3,
+                          height: screenHeight *0.05,
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              // labelText: 'ex) 김신한',
+                              border: OutlineInputBorder(),
+                            ),
+                            controller: _inputName,
+                            keyboardType: TextInputType.text,
+                          ),
+                        ),
+                      ],
+                    ),
+                    actions: <Widget>[
+                      OutlinedButton(
+                        onPressed: () {
+                          RegisController().goToMainTest();
+                        }, 
+                        child: const Text("확인(제출성공)"),
+                      ),
+                      // (controller.verif(inputVeriN.text))
+                      
+                      OutlinedButton(
+                        child: const Text("확인(실패)"),
+                        onPressed: () {
+                          // 다시 인증문구 페이지로
+                          Navigator.pop(context);
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                title: Column(
+                                  children: <Widget>[
+                                    new Text("로그인 실패"),
+                                  ],
+                                ),
+                                //
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "등록되지 않은 사용자입니다.",
+                                    ),
+                                  ],
+                                ),
+                                actions: <Widget>[
+                                  new OutlinedButton(
+                                    child: new Text("뒤로"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+                        },
+                      ),
+                    ],
+                  );
+                }
+              );
+            },
+            
+            
+            
           ),
 
-          // SizedBox(
-          //   height: buttonHeight2,
-          //   width: 200,
-          //   child: MaterialButton(
-          //     shape: RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.circular(15.0),
-          //     ),
-          //     color: const Color.fromARGB(255, 178, 255, 205),
-          //     highlightColor: const Color.fromARGB(255, 107, 255, 134),
-          //     // 클릭시 색상 다르게 표현
-          //     onPressed: () {
-          //       RegisController().goToMainTest();
-          //     },
-
-          //     child: const Text(
-          //       '로그인 하기',
-          //       style: TextStyle(
-          //         fontSize: 30,
-          //         color: Colors.white,
-          //       ),
-          //       textAlign: TextAlign.center,
-          //     ),
-          //   ),
-          // ),
 
           SizedBox(
             height: imageHeight,
@@ -183,6 +262,8 @@ class StartPage extends StatelessWidget {
     );
   }
 }
+
+
 
 // 두번째 페이지 - 이름 받기 -> 계좌 받기로 수정(인증용)
 

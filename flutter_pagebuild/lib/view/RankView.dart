@@ -15,6 +15,9 @@ class RankView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final controller = Get.find<RankController>();
+    double screenHeight = MediaQuery.of(context).size.height;
+    double appbarHeight = screenHeight * 0.12;
+
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 228, 247, 247),
 
@@ -22,7 +25,9 @@ class RankView extends StatelessWidget {
         title: const HeaderWidget(),
         centerTitle: true,
         backgroundColor: Colors.white,
-        toolbarHeight: 130,
+        toolbarHeight: appbarHeight,
+        leadingWidth: 10,
+
       ),
 
       body: SingleChildScrollView(

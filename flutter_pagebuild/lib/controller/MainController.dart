@@ -47,13 +47,24 @@ class resetMainModel with ChangeNotifier {
     userlogin.savings = getUserinfoMap['account'][1];
 
     mainmodel.challenge = 30;
+
     mainmodel.stampCnt = getUserinfoMap['stamp']['day'];
     mainmodel.challengeSuc = getUserinfoMap['stamp']['stampCnt'][0];
     mainmodel.challengefail = getUserinfoMap['stamp']['stampCnt'][1];
     mainmodel.savingSuc = getUserinfoMap['stamp']['stampCnt'][2];
-    notifyListeners();
-
+    mainmodel.stampList = await getStampListOf('도레미');
     return userlogin.username;
+  }
+
+  Future<void> get resetUser async {
+    Map<String, dynamic> getUserinfoMap = await getDataMapOf('도레미');
+    mainmodel.challenge = 30;
+    mainmodel.stampCnt = getUserinfoMap['stamp']['day'];
+    mainmodel.challengeSuc = getUserinfoMap['stamp']['stampCnt'][0];
+    mainmodel.challengefail = getUserinfoMap['stamp']['stampCnt'][1];
+    mainmodel.savingSuc = getUserinfoMap['stamp']['stampCnt'][2];
+
+    mainmodel.stampList = await getStampListOf('도레미');
   }
 
 //원형 그래프
@@ -120,11 +131,16 @@ class resetMainModel with ChangeNotifier {
     //소수점 자리 수
     return MainModel.inst.savinRate.toStringAsFixed(1);
   }
+
+  bool get getThreadCon {
+    return mainmodel.threadcontroll;
+  }
 }
 
 class MainController extends GetxController {
   //reset 모델 - 싱글턴 생성자
   resetMainModel reset = resetMainModel();
+  MainModel mainmodel = MainModel.inst;
 
   //하단부는 페이지 관리
   void getController() {

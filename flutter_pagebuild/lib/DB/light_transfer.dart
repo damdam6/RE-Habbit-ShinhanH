@@ -15,14 +15,11 @@ transfer(date, time, from, to, amount, memoFrom, memoTo, type) async {
       patchTransaction(from, date, time, type, amount, 0, memoFrom, to);
       if (await getNameOf(to) != null) {
         patchTransaction(to, date, time, type, 0, amount, memoTo, from);
-      } else {
-        patchDiffBankAccount(to, memoTo);
       }
     } else {
       print("출금가능금액이 부족합니다!");
     }
   } else {
-    patchDiffBankAccount(from, memoTo);
     patchTransaction(to, date, time, type, 0, amount, memoTo, from);
   }
 }

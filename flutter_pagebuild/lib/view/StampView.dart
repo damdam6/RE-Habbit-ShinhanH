@@ -23,7 +23,6 @@ class StampView extends StatelessWidget {
         toolbarHeight: appbarHeight,
         centerTitle: true,
         leadingWidth: 10,
-
       ),
       body: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
@@ -34,7 +33,7 @@ class StampView extends StatelessWidget {
               height: 30,
             ),
             Text(
-              '현재 당근 수 : 2개',
+              '현재 당근 수 : ${resetStamp().getchallengeSuc}개',
               // '당근 수 {$carrotCnt} / 30'
               style: TextStyle(
                 fontSize: 25,
@@ -93,6 +92,8 @@ class StampView extends StatelessWidget {
   }
 }
 
+var controller = Get.find<StampController>();
+
 // 로고 누르면 메인으로 돌아가게 함 (기능 추가)
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({Key? key}) : super(key: key);
@@ -101,7 +102,6 @@ class HeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton.filled(
       onPressed: () {
-        var controller = Get.find<StampController>();
         controller.goToMain();
       },
       icon: Image.asset(
@@ -157,31 +157,30 @@ class Stamps extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<int> stampList = resetStamp().getStampList;
     return GridView.count(
       padding: const EdgeInsets.all(30),
       crossAxisCount: 3,
       childAspectRatio: 1, // 가로:세로 비율 설정
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(), // 스크롤 비활성화
-      children: List.generate(5, (index) {
+      children: List.generate(resetStamp().getStampCnt, (index) {
         String imageName;
         // 적용예시) n-1 일차가 rabbit 일 때
         // if (index == n-1) {
         //   imageName = 'assets/images/rabbit-stamp.png'; // 첫 번째 이미지
         // }
-        if (index == 0) {
-          imageName = 'assets/images/rabbit-stamp.png'; // 첫 번째 이미지
-        } else if (index == 1) {
+
+        int stamp = stampList[index];
+        if (stamp == 0) {
+          imageName = 'assets/images/carrot-stamp.png';
+          // 첫 번째 이미지
+        } else if (stamp == 1) {
           imageName = 'assets/images/rabbit-stamp.png'; // 두 번째 이미지
-        } else if (index == 2) {
-          imageName = 'assets/images/carrot-stamp.png'; // 세 번째 이미지
-        } else if (index == 3) {
-          imageName = 'assets/images/carrot-stamp.png'; // 네 번째 이미지
-        } else if (index == 4) {
-          imageName = 'assets/images/money-stamp.png'; // 다섯 번째 이미지
         } else {
-          imageName = '';
+          imageName = 'assets/images/money-stamp.png'; // 다섯 번째 이미지
         }
+        ;
 
         return Center(
           child: Container(

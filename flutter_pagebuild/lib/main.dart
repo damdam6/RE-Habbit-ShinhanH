@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:flutter_pagebuild/controller/thread.dart';
 
 void main() {
-  //spawnNewIsolate();
+  //myTask;
   runApp(const MyApp());
 }
 

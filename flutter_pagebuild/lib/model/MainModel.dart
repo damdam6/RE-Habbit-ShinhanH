@@ -29,6 +29,8 @@ class MainModel {
   //Model도 싱글턴으로 구현
   MainModel.privateConstructor();
 
+  bool threadcontroll = false;
+
   //MainModel.inst로 구현
   static final MainModel _inst = MainModel.privateConstructor();
   static MainModel get inst => _inst;
@@ -58,7 +60,7 @@ class MainModel {
   //성공 판에서 성공여부 체크 하는 map = 스탬프 화면에 올릴 정보들
   // key = 몇일차인지 : value = 성공여부
   Map<int, int> check = {1: -1, 2: -1, 3: 0, 4: 0};
-  // List<int> stampList = [];
+  List<int> stampList = [];
 
   int challengeSuc = 10;
   int savingSuc = 10;

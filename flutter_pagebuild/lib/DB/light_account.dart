@@ -111,6 +111,23 @@ getInfoValueOf(accountNo, key) async {
   }
 }
 
+addAccount(String user, String accountNo, String type, String title) async {
+  var path = 'v$version/user/$user/계좌목록';
+  final url = Uri.https(domain, "$path.json");
+  var response = await http.get(url);
+  var cnt = json.decode(response.body).length;
+  Map<String, dynamic> account = accountToMap(user, accountNo, type, title, 0, 0);
+  Map<String, dynamic> map = {};
+  map[cnt.toString()] = account;
+  await http.patch(
+    url,
+    body: json.encode(map),
+  );
+  initBalance(accountNo, 0);
+  initTransactionList(accountNo);
+  patchToFirebase('account', account);
+}
+
 String createAccountNo() {
   return (random.nextInt(100000) + 100000).toString();
 }

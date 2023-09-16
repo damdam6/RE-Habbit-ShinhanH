@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'light_transaction.dart';
 
 String domain = 'shb-hackton-ad177-default-rtdb.firebaseio.com';
 
@@ -43,7 +44,13 @@ Map dataMap = {
           '_day29',
           '_day30'
         ],
+<<<<<<< HEAD
         '고객명': '_user1'
+=======
+        '고객명': '_user1',
+        '챌린지목표': '_challenge',
+        '적금금액': '_amount'
+>>>>>>> e7d2776f018e3b15cb448b5d690cfe6fa615e84b
       }
     }
   }
@@ -56,17 +63,36 @@ Future getDataMapOf(user) async {
   return json.decode(response.body);
 }
 
-void patchUserData(user, accountNo1, accountNo2, challenge) async {
+Future getStampListOf(user) async {
+  var path = 'service/user/$user/stamp/stampList';
+  final url = Uri.https(domain, "$path.json");
+  final response = await http.get(url);
+  List<int> stampList = [];
+  for (int stamp in json.decode(response.body)) {
+    stampList.add(stamp);
+  }
+  return stampList;
+}
+
+void patchUserData(user, accountNo1, accountNo2, challenge, amount) async {
   var path = 'service/user/$user';
   final url = Uri.https(domain, "$path.json");
   await http.patch(
     url,
+<<<<<<< HEAD
     body: json.encode(dataToMap(user, accountNo1, accountNo2, challenge)),
+=======
+    body: json.encode(dataToMap(user, accountNo1, accountNo2, challenge, amount)),
+>>>>>>> e7d2776f018e3b15cb448b5d690cfe6fa615e84b
   );
 }
 
 Map<String, dynamic> dataToMap(
+<<<<<<< HEAD
     String name, String accountNo1, String accountNo2, String challenge) {
+=======
+    String name, String accountNo1, String accountNo2, String challenge, int amount) {
+>>>>>>> e7d2776f018e3b15cb448b5d690cfe6fa615e84b
   Map<String, dynamic> map = {};
   map['고객명'] = name;
   Map<String, dynamic> account = {};
@@ -81,6 +107,7 @@ Map<String, dynamic> dataToMap(
   stamp['stampList'] = List<int>.filled(30, 0);
   map['stamp'] = stamp;
   map['챌린지목표'] = challenge;
+  map['적금금액'] = amount;
   return map;
 }
 
@@ -149,6 +176,7 @@ categoryOf(String title) {
   return categoryMap[title];
 }
 
+<<<<<<< HEAD
 // lastMonthSpending(String accountNo, int thisMonth) async {
 //   List list = await getTransactionListByAccountNo(accountNo);
 //   Map<String, int> categoryCnt = {};
@@ -171,6 +199,39 @@ categoryOf(String title) {
 
 =======
 >>>>>>> Stashed changes
+=======
+lastMonthSpending(String accountNo, int thisMonth) async {
+  List list = await getTransactionListByAccountNo(accountNo);
+  Map<String, int> categoryCnt = {};
+  for (var item in list) {
+    if (int.parse(item["거래일자"].substring(0, 2)) == ((thisMonth - 2) % 12) + 1) {
+      var expenditure = item["내용"];
+      if (categoryMap.containsKey(expenditure)) {
+        var category = categoryOf(expenditure);
+        if (categoryCnt.containsKey(category)) {
+          categoryCnt[category] = categoryCnt[category]! + 1;
+        } else {
+          categoryCnt[category] = 1;
+        }
+      }
+    }
+  }
+  return (categoryCnt);
+}
+
+getTransactionListBetween(String accountNo, String startDate, String startTime, String endDate, String endTime) async {
+  var response = await getTransactionListByAccountNo(accountNo);
+  List list = [];
+  for (var item in response) {
+    var date = item["거래일자"];
+    var time = item["거래시간"];
+    if ((timestamp(startDate, startTime) <= timestamp(date, time)) && (timestamp(date, time) <= timestamp(endDate, endTime))) {
+      list.add(item);
+    }
+  }
+  return list;
+}
+>>>>>>> e7d2776f018e3b15cb448b5d690cfe6fa615e84b
 
 void main() async {
   // print(await getDataMapOf("도레미"));

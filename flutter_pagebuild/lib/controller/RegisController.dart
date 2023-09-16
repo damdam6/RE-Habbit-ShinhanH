@@ -166,7 +166,7 @@ class RegisController extends GetxController {
     //사용자 정보 업로드
     //이름, 입출금, 적금,
     patchUserData(checkInfo.registName, regisModel.accountConsum!.accNum,
-        regisModel.accountSaving!.accNum, '커피 안 마시기');
+        regisModel.accountSaving!.accNum, '커피 안 마시기', 10000);
 
     User userlogin = User.getUserlogin;
     userlogin.username = checkInfo.registName;
@@ -177,13 +177,13 @@ class RegisController extends GetxController {
     Get.put(MainController());
     //getController 필요할 때 만들 클래스들 저장
     Get.find<MainController>().getController();
-    Get.offAll(() => const MainView());
+    Get.offAll(() => MainView());
   }
 
   void goToMainTest() {
     Get.put(MainController());
     //getController 필요할 때 만들 클래스들 저장
     Get.find<MainController>().getController();
-    Get.offAll(() => const MainView());
+    Get.offAll(() => MainView());
   }
 }
