@@ -757,7 +757,7 @@ class _CardTableState extends State<CardTable> {
   late Future<List<dynamic>> _cardListFuture;
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
 
     _cardListFuture = getCardListOf(resetMainModel.mainmodel.user.username);
